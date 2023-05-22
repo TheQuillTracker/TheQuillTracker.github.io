@@ -1,13 +1,14 @@
-  const firebaseConfig = {
-    apiKey: "AIzaSyAdp0VZdRdRHRyGAHIAEvpeIW9_mlFi8q4",
-    authDomain: "thequilltracker.firebaseapp.com",
-    databaseURL: "https://thequilltracker-default-rtdb.firebaseio.com",
-    projectId: "thequilltracker",
-    storageBucket: "thequilltracker.appspot.com",
-    messagingSenderId: "1626545664",
-    appId: "1:1626545664:web:6a1523bd326dc8f45982e5",
-    measurementId: "G-K5EZLD7KSG"
+const firebaseConfig = {
+    apiKey: "AIzaSyCaOVVb_owalQOlHC9DdjTYDPyQbu_2pmY",
+    authDomain: "thequillinventorytracker.firebaseapp.com",
+    databaseURL: "https://thequillinventorytracker-default-rtdb.firebaseio.com",
+    projectId: "thequillinventorytracker",
+    storageBucket: "thequillinventorytracker.appspot.com",
+    messagingSenderId: "517005324655",
+    appId: "1:517005324655:web:8645ad9e3e487f0414f89a",
+    measurementId: "G-EE5L5XGL8B"
   };
+
 
   firebase.initializeApp(firebaseConfig);
 
