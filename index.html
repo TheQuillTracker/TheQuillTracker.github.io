@@ -92,45 +92,43 @@
 
     <button id="export-btn">Export to Excel</button>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="./mail.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
     <script>
-        const form = document.querySelector('#form');
-        const table = document.querySelector('#table');
-        const exportBtn = document.querySelector('#export-btn');
+       function addRow(key, name, item, quantity, dateBorrowed) {
+    const row = document.createElement('tr');
+    row.setAttribute('data-key', key);
+    row.innerHTML = `
+        <td>${name}</td>
+        <td>${item}</td>
+        <td>${quantity}</td>
+        <td>${dateBorrowed}</td>
+        <td></td>
+        <td><button onclick="returnItem(this)">Return</button></td>`;
+    table.appendChild(row);
+}
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.querySelector('#name').value;
-            const item = document.querySelector('#item').value;
-            const quantity = document.querySelector('#quantity').value;
-            const dateBorrowed = new Date().toLocaleString();
-            addRow(name, item, quantity, dateBorrowed);
-            form.reset();
-        });
+function returnItem(button) {
+    const row = button.parentNode.parentNode;
+    const returnedDate = new Date().toLocaleString();
+    row.cells[4].innerHTML = returnedDate;
+    row.cells[5].innerHTML = 'Returned';
+    
+    // Get the key of the item in the database
+    const key = row.getAttribute('data-key');
+    
+    // Update the returned date in the database
+    inventoryRef.child(key).update({
+        returnedDate
+    });
+}
 
-        function addRow(name, item, quantity, dateBorrowed) {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${name}</td>
-                <td>${item}</td>
-                <td>${quantity}</td>
-                <td>${dateBorrowed}</td>
-                <td></td>
-                <td><button onclick="returnItem(this)">Return</button></td>`;
-            table.appendChild(row);
-        }
-
-        function returnItem(button) {
-            const row = button.parentNode.parentNode;
-            row.cells[4].innerHTML = new Date().toLocaleString();
-            row.cells[5].innerHTML = 'Returned';
-        }
-
-        exportBtn.addEventListener('click', () => {
-            const wb = XLSX.utils.table_to_book(table);
-            XLSX.writeFile(wb, 'inventory.xlsx');
-        });
+exportBtn.addEventListener('click', () => {
+    const wb = XLSX.utils.table_to_book(table);
+    XLSX.writeFile(wb, 'inventory.xlsx');
+});
     </script>
 </body>
 </html>
